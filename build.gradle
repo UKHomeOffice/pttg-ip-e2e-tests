@@ -1,0 +1,31 @@
+group 'pttg-ip-e2e-tests'
+version '0.1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'uk.gov.digital.ho.proving.income.E2eTests'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.seleniumhq.selenium:selenium-java:3.4.0') {
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium-android-driver'
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium-iphone-driver'
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium-safari-driver'
+        exclude group: 'org.webbitserver', module: 'webbit'
+        exclude group: 'commons-codec', module: 'commons-codec'
+        exclude group: 'cglib', module: 'cglib-nodep'
+    }
+
+    testCompile('io.github.bonigarcia:webdrivermanager:2.2.2')
+}
