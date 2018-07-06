@@ -7,12 +7,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IpsSearchTest {
 
-    private WebDriver webDriver;
+    private WebDriver driver;
     private IpsSearchPage ipsSearchPage;
 
     @BeforeClass
@@ -22,8 +23,10 @@ public class IpsSearchTest {
 
     @Before
     public void setUpTest() {
-        webDriver = new ChromeDriver();
-        ipsSearchPage = new IpsSearchPage(webDriver);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        ipsSearchPage = new IpsSearchPage(driver);
 
     }
 
