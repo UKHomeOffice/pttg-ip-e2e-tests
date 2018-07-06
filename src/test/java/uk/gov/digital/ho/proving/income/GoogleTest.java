@@ -5,8 +5,12 @@ import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GoogleTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GoogleTest.class);
 
     private WebDriver driver;
     private GooglePage google;
@@ -20,7 +24,11 @@ public class GoogleTest {
     public void setUpTest() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        try {
+            driver = new ChromeDriver(options);
+        } catch(Exception e) {
+            LOGGER.error("Failed to create chrome web driver due to ", e);
+        }
         google = new GooglePage(driver);
     }
 
