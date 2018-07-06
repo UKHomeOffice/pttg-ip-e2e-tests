@@ -7,7 +7,7 @@ pipeline:
       - cd pttg-ip-e2e-tests
       - ./gradlew test
     when:
-      branch: master, e2e-tests
+      branch: master, EE-476/e2e-tests
       event: push
 
 services:
