@@ -35,6 +35,7 @@ public class GoogleTest {
     }
 
     @Test
+    @Ignore
     public void googleTest() throws InterruptedException {
         google.goTo();
         google.searchFor("automation");
