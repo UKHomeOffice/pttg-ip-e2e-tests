@@ -3,7 +3,7 @@ pipeline:
   test:
     image: quay.io/ukhomeofficedigital/openjdk8:v1.8.0.171
     commands:
-      - ./gradlew test --stacktrace
+      - ./gradlew test --stacktrace -i
     when:
       branches: [ master, EE-4476/e2e-tests ]
       event: push

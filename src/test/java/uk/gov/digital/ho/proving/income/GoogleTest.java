@@ -25,9 +25,11 @@ public class GoogleTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         try {
+            LOGGER.info("Creating new chrome driver");
             driver = new ChromeDriver(options);
         } catch(Exception e) {
             LOGGER.error("Failed to create chrome web driver due to ", e);
+            throw(e);
         }
         google = new GooglePage(driver);
     }
