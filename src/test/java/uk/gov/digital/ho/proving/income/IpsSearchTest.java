@@ -8,7 +8,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +28,8 @@ public class IpsSearchTest {
     public void setUpTest() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        ChromeDriverService chromeDriverService = new ChromeDriverService.Builder().usingPort(4444).build();
+        driver = new ChromeDriver(chromeDriverService, options);
         ipsSearchPage = new IpsSearchPage(driver);
 
     }

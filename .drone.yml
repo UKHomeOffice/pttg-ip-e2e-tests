@@ -3,7 +3,6 @@ pipeline:
   test:
     image: quay.io/ukhomeofficedigital/openjdk8:v1.8.0.171
     commands:
-      - ifconfig lo up
       - ./gradlew test --stacktrace -i
     when:
       branches: [ master, EE-4476/e2e-tests ]
@@ -13,3 +12,5 @@ services:
   ui:
     image: "quay.io/ukhomeofficedigital/pttg-ip-fm-ui:build-95"
     ports: "8000:8000"
+  selenium:
+    image: selenium/standalone-chrome
