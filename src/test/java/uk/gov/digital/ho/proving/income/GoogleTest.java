@@ -1,6 +1,6 @@
 package uk.gov.digital.ho.proving.income;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,7 +13,7 @@ public class GoogleTest {
 
     @BeforeClass
     public static void setUpClass() {
-        WebDriverManager.chromedriver().setup();
+        ChromeDriverManager.getInstance().setup();
     }
 
     @Before

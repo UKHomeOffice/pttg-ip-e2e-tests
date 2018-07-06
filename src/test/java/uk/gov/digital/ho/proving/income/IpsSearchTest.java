@@ -1,5 +1,6 @@
 package uk.gov.digital.ho.proving.income;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +19,7 @@ public class IpsSearchTest {
 
     @BeforeClass
     public static void setUpClass() {
-        WebDriverManager.chromedriver().setup();
+        ChromeDriverManager.getInstance().setup();
     }
 
     @Before
