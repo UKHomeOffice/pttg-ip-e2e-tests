@@ -55,6 +55,10 @@ public class IpsSearchPage {
         this.wait = new WebDriverWait(driver, 30);
     }
 
+    public void start() {
+        this.driver.get("https://localhost:8000");
+    }
+
     public void search() {
         this.searchButton.click();
     }
