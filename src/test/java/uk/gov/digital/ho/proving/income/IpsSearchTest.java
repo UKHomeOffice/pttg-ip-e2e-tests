@@ -1,16 +1,16 @@
 package uk.gov.digital.ho.proving.income;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,13 +25,10 @@ public class IpsSearchTest {
     }
 
     @Before
-    public void setUpTest() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        ChromeDriverService chromeDriverService = new ChromeDriverService.Builder().usingPort(4444).build();
-        driver = new ChromeDriver(chromeDriverService, options);
+    public void setUpTest() throws MalformedURLException {
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
         ipsSearchPage = new IpsSearchPage(driver);
-
     }
 
     @Test
