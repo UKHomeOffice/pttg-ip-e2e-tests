@@ -5,7 +5,7 @@ pipeline:
     commands:
       - git clone https://github.com/UKHomeOffice/pttg-ip-e2e-tests.git
       - git checkout EE-4476/e2e-tests
-      - cd pttg-ip-e2e-tests
+      - ls -la
       - ./gradlew test
     when:
       branches: [ master, EE-4476/e2e-tests ]
