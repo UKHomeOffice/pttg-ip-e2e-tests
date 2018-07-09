@@ -1,10 +1,7 @@
 package uk.gov.digital.ho.proving.income;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -33,6 +30,14 @@ public class IpsSearchTest {
     }
 
     @Test
+    public void thatFailedLoginShowsErrors() {
+        ipsSearchPage.start();
+        ipsSearchPage.login();
+        assertThat(ipsSearchPage.getLoginErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
+    }
+
+    @Test
+    @Ignore
     public void thatInvalidSearchesShowErrors() {
         ipsSearchPage.start();
         ipsSearchPage.search();
