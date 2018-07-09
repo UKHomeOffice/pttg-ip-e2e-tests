@@ -7,8 +7,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IpsSearchPage {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IpsSearchPage.class);
+
 
     private final WebDriver driver;
     private final WebDriverWait wait;
@@ -63,6 +68,8 @@ public class IpsSearchPage {
 
     public void start() {
         this.driver.get("https://ui:8000");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("body")));
+        LOGGER.info("Page source: \n" + this.driver.getPageSource());
     }
 
     public void search() {
