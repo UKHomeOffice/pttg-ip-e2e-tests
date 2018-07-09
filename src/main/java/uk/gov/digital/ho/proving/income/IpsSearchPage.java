@@ -62,7 +62,7 @@ public class IpsSearchPage {
     }
 
     public void start() {
-        this.driver.get("https://localhost:8000");
+        this.driver.get("https://ui:8000");
     }
 
     public void search() {
