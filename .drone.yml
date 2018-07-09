@@ -42,7 +42,7 @@ services:
       - BASE_HMRC_URL=https://test-developer.service.hmrc.gov.uk # TODO replace this with Wiremock
 
   feedback:
-    image: quay.io/ukhomeofficedigital/pttg-ip-feedback:build-41
+    image: quay.io/ukhomeofficedigital/pttg-feedback:build-41
 
 
 
