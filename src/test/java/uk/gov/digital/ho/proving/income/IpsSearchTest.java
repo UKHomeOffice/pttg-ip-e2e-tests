@@ -30,16 +30,10 @@ public class IpsSearchTest {
     }
 
     @Test
-    @Ignore
     public void thatInvalidSearchesShowErrors() {
         ipsSearchPage.start();
         ipsSearchPage.search();
         assertThat(ipsSearchPage.getErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
-    }
-
-    @After
-    public void tearDown()  {
-//        webDriver.quit();
     }
 
 }

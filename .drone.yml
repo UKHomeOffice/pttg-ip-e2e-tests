@@ -9,8 +9,10 @@ pipeline:
       event: push
 
 services:
+
+  selenium:
+    image: selenium/standalone-chrome
+
   ui:
     image: "quay.io/ukhomeofficedigital/pttg-ip-fm-ui:build-95"
     ports: "8000:8000"
-  selenium:
-    image: selenium/standalone-chrome
