@@ -41,7 +41,7 @@ public class IpsSearchTest {
     @Test
     public void thatUnknownIndividualReturnsNoRecord() {
         Applicant applicant = new Applicant("Val", "Lee", LocalDate.of(1953, 12, 6), "YS255610C");
-        ipsSearchPage.search();
+        ipsSearchPage.search(applicant);
         assertThat(ipsSearchPage.getPageHeading()).isNotNull().withFailMessage("The page heading exists");
         assertThat(ipsSearchPage.getPageHeading().getText()).contains("There is no record");
     }
