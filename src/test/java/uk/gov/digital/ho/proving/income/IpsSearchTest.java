@@ -30,13 +30,6 @@ public class IpsSearchTest {
     }
 
     @Test
-    public void thatFailedLoginShowsErrors() {
-        ipsSearchPage.start();
-        ipsSearchPage.login();
-        assertThat(ipsSearchPage.getLoginErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
-    }
-
-    @Test
     @Ignore
     public void thatInvalidSearchesShowErrors() {
         ipsSearchPage.start();
