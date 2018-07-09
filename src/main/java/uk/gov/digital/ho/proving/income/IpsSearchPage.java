@@ -67,8 +67,7 @@ public class IpsSearchPage {
     }
 
     public void start() {
-        this.driver.get("https://ui:8000");
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("body")));
+        this.driver.get("http://ui:8000");
         LOGGER.info("Page source: \n" + this.driver.getPageSource());
     }
 
