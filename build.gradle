@@ -23,8 +23,12 @@ dependencies {
 
     compile('ch.qos.logback:logback-classic:1.2.3')
     compile('org.junit.platform:junit-platform-launcher:1.2.0')
-
+    compile "com.fasterxml.jackson.core:jackson-annotations:2.9.5"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.5"
+    compile "com.fasterxml.jackson.core:jackson-core:2.9.5"
     compile('io.github.bonigarcia:webdrivermanager:2.2.2')
+
+    compileOnly 'org.projectlombok:lombok:1.16.12'
 
     testCompile('org.assertj:assertj-core:3.10.0')
 }

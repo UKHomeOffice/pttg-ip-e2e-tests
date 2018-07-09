@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.digital.ho.proving.income.domain.Applicant;
 
 public class IpsSearchPage {
 
@@ -54,6 +55,9 @@ public class IpsSearchPage {
     @FindBy(id = "validation-error-summary-heading")
     private WebElement errorSummaryHeader;
 
+    @FindBy(id = "pageDynamicHeading")
+    private WebElement pageHeading;
+
     public IpsSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -69,8 +73,29 @@ public class IpsSearchPage {
         this.searchButton.click();
     }
 
+    public void search(Applicant applicant) {
+        forename.sendKeys(applicant.forename());
+        surname.sendKeys(applicant.surname());
+        dateOfBirthDay.sendKeys(Integer.valueOf(applicant.dateOfBirth().getDayOfMonth()).toString());
+        dateOfBirthMonth.sendKeys(Integer.valueOf(applicant.dateOfBirth().getMonthValue()).toString());
+        dateOfBirthYear.sendKeys(Integer.valueOf(applicant.dateOfBirth().getYear()).toString());
+        nino.sendKeys(applicant.nino());
+
+        dependants.sendKeys("0");
+        applicationRaisedDateDay.sendKeys("3");
+        applicationRaisedDateMonth.sendKeys("7");
+        applicationRaisedDateYear.sendKeys("2018");
+
+        search();
+    }
+
     public WebElement getErrorSummaryHeader() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("validation-error-summary-heading")));
         return errorSummaryHeader;
+    }
+
+    public WebElement getPageHeading() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("pageDynamicHeading")));
+        return pageHeading;
     }
 }
