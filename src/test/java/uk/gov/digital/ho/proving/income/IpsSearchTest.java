@@ -29,11 +29,11 @@ public class IpsSearchTest {
         capabilities.acceptInsecureCerts();
         driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), capabilities);
         ipsSearchPage = new IpsSearchPage(driver);
+        ipsSearchPage.start();
     }
 
     @Test
     public void thatInvalidSearchesShowErrors() {
-        ipsSearchPage.start();
         ipsSearchPage.search();
         assertThat(ipsSearchPage.getErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
     }
