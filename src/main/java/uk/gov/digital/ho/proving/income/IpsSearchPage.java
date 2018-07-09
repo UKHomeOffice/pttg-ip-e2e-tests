@@ -48,7 +48,7 @@ public class IpsSearchPage {
     @FindBy(id = "applicationRaisedDateYear")
     private WebElement applicationRaisedDateYear;
 
-    @FindBy(id = "searchBtn")
+    @FindBy(id = "submitBtn")
     private WebElement searchButton;
 
     @FindBy(id = "validation-error-summary-heading")
