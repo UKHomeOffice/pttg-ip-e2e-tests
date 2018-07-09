@@ -27,6 +27,7 @@ public class IpsSearchTest {
     @Before
     public void setUpTest() throws MalformedURLException {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.acceptInsecureCerts();
         driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
         ipsSearchPage = new IpsSearchPage(driver);
     }
