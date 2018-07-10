@@ -61,7 +61,8 @@ public class IpsSearchTest {
     }
 
     @Test
-    public void thatUnknownIndividualReturnsNoRecord() {
+    public void thatUnknownIndividualReturnsNoRecord() throws IOException {
+        createFailedMatchStubs();
         Applicant applicant = new Applicant("Val", "Lee", LocalDate.of(1953, 12, 6), "YS255610C");
         ipsSearchPage.search(applicant);
         assertThat(ipsSearchPage.getPageHeading()).isNotNull().withFailMessage("The page heading should exist");
@@ -75,6 +76,23 @@ public class IpsSearchTest {
         ipsSearchPage.search(applicant);
         assertThat(ipsSearchPage.getPageHeading()).isNotNull().withFailMessage("The page heading should exist");
         assertThat(ipsSearchPage.getPageHeading().getText()).contains("Passed").withFailMessage("The page heading should indicate success");
+    }
+
+    public void createFailedMatchStubs() throws IOException {
+        stubFor(post(urlEqualTo("/audit"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
+
+        stubFor(get(urlEqualTo("/access"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withBody(buildOauthResponse())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
+
+        stubFor(post(urlEqualTo("/individuals/matching/"))
+                .willReturn(aResponse().withStatus(HttpStatus.UNAUTHORIZED.value())
+                        .withBody(buildFailedMatchResponse())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
+
     }
 
     public void createStubs() throws IOException {
@@ -135,6 +153,11 @@ public class IpsSearchTest {
 
     private String buildMatchResponse() throws IOException {
         return getResponseFile("/template/matchResponse.json")
+                .replace("${matchId}", MATCH_ID);
+    }
+
+    private String buildFailedMatchResponse() throws IOException {
+        return getResponseFile("/template/failedMatchResponse.json")
                 .replace("${matchId}", MATCH_ID);
     }
 
