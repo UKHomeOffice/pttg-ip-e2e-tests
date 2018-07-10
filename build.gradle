@@ -3,9 +3,6 @@ buildscript {
         mavenCentral()
         jcenter()
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
-    }
 }
 
 apply plugin: 'java'
@@ -17,6 +14,9 @@ repositories {
 
 dependencies {
 
+    compile "com.fasterxml.jackson.core:jackson-annotations:2.9.5"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.5"
+    compile "com.fasterxml.jackson.core:jackson-core:2.9.5"
     compile('org.seleniumhq.selenium:selenium-java:3.4.0') {
         exclude group: 'org.seleniumhq.selenium', module: 'selenium-android-driver'
         exclude group: 'org.seleniumhq.selenium', module: 'selenium-iphone-driver'
@@ -25,21 +25,14 @@ dependencies {
         exclude group: 'commons-codec', module: 'commons-codec'
         exclude group: 'cglib', module: 'cglib-nodep'
     }
-
     compile('ch.qos.logback:logback-classic:1.2.3')
 
     compileOnly 'org.projectlombok:lombok:1.16.12'
 
     testCompile 'io.github.bonigarcia:webdrivermanager:2.2.2'
-    testCompile "com.fasterxml.jackson.core:jackson-annotations:2.9.5"
-    testCompile "com.fasterxml.jackson.core:jackson-databind:2.9.5"
-    testCompile "com.fasterxml.jackson.core:jackson-core:2.9.5"
     testCompile "com.github.tomakehurst:wiremock:2.18.0"
     testCompile 'org.assertj:assertj-core:3.10.0'
-    testCompile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    testCompile 'org.springframework.boot:spring-boot-starter-jetty'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework:spring-test:4.3.18.RELEASE'
+    testCompile 'org.springframework:spring-webmvc:4.3.18.RELEASE'
 
 }
