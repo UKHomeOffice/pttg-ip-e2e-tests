@@ -30,7 +30,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.12'
 
     testCompile 'io.github.bonigarcia:webdrivermanager:2.2.2'
-    testCompile "com.github.tomakehurst:wiremock:2.18.0"
+    testCompile "com.github.tomakehurst:wiremock-standalone:2.18.0"
     testCompile 'org.assertj:assertj-core:3.10.0'
     testCompile 'org.springframework:spring-test:4.3.18.RELEASE'
     testCompile 'org.springframework:spring-webmvc:4.3.18.RELEASE'
