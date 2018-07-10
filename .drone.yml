@@ -33,13 +33,13 @@ services:
     environment:
       - BASE_HMRC_ACCESS_CODE_URL=http://hmrc-access:8090
       - PTTG_AUDIT_URL=http://audit:8083
-      - BASE_HMRC_URL=https://test-api.service.hmrc.gov.uk # TODO replace this with Wiremock
+      - BASE_HMRC_URL=http://test:8111
 
   hmrc-access:
     image: quay.io/ukhomeofficedigital/pttg-ip-hmrc-access-code:build-54
     environment:
       - PTTG_AUDIT_URL=http://audit:8083
-      - BASE_HMRC_URL=https://test-developer.service.hmrc.gov.uk # TODO replace this with Wiremock
+      - BASE_HMRC_URL=http://test:8111
 
   feedback:
     image: quay.io/ukhomeofficedigital/pttg-feedback:build-41
