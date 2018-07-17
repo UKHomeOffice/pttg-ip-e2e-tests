@@ -1,5 +1,5 @@
 {
-  "access_code": "some code",
+  "access_token": "some code",
   "expires_in": 360000,
   "refresh_token": "some refresh token"
 }
