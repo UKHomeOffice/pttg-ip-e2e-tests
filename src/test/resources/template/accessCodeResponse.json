@@ -1,5 +1,5 @@
 {
-  "code": "some code",
-  "validDuration": 360000,
-  "refreshToken": "some refresh token"
+  "access_code": "some code",
+  "expires_in": 360000,
+  "refresh_token": "some refresh token"
 }
