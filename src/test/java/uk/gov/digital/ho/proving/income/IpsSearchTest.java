@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.apache.commons.io.IOUtils;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -55,6 +52,7 @@ public class IpsSearchTest {
     }
 
     @Test
+    @Ignore
     public void thatInvalidSearchesShowErrors() {
         ipsSearchPage.search();
         assertThat(ipsSearchPage.getErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
@@ -70,6 +68,7 @@ public class IpsSearchTest {
     }
 
     @Test
+    @Ignore
     public void thatPassingIndividualReturnsSuccess() throws IOException {
         createStubs();
         Applicant applicant = new Applicant("Laurie", "Halford", LocalDate.of(1992, 3, 1), "GH576240A");
