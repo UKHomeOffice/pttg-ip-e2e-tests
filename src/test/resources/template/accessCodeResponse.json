@@ -1,0 +1,5 @@
+{
+  "code": "some code",
+  "validDuration": 360000,
+  "refreshToken": "some refresh token"
+}

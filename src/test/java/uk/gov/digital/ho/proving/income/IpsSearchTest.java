@@ -79,30 +79,24 @@ public class IpsSearchTest {
     }
 
     public void createFailedMatchStubs() throws IOException {
-        stubFor(post(urlEqualTo("/audit"))
-                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
-                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
-
-        stubFor(get(urlEqualTo("/access"))
-                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
-                        .withBody(buildOauthResponse())
-                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
         stubFor(post(urlEqualTo("/individuals/matching/"))
                 .willReturn(aResponse().withStatus(HttpStatus.UNAUTHORIZED.value())
                         .withBody(buildFailedMatchResponse())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
+        stubFor(post(urlEqualTo("/oauth/token"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withBody(buildAccessCodeResponse())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
+
     }
 
     public void createStubs() throws IOException {
-        stubFor(post(urlEqualTo("/audit"))
-                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
-                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
-        stubFor(get(urlEqualTo("/access"))
+        stubFor(post(urlEqualTo("/oauth/token"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
-                        .withBody(buildOauthResponse())
+                        .withBody(buildAccessCodeResponse())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
         stubFor(post(urlEqualTo("/individuals/matching/"))
@@ -149,6 +143,10 @@ public class IpsSearchTest {
 
     private String asJson(Object input) throws JsonProcessingException {
         return objectMapper.writeValueAsString(input);
+    }
+
+    private String buildAccessCodeResponse() throws IOException {
+        return getResponseFile("/template/accessCodeResponse.json");
     }
 
     private String buildMatchResponse() throws IOException {
