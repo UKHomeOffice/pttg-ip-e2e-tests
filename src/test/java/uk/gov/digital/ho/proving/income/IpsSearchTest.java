@@ -80,7 +80,7 @@ public class IpsSearchTest {
     public void createFailedMatchStubs() throws IOException {
 
         stubFor(post(urlEqualTo("/individuals/matching/"))
-                .willReturn(aResponse().withStatus(HttpStatus.UNAUTHORIZED.value())
+                .willReturn(aResponse().withStatus(HttpStatus.FORBIDDEN.value())
                         .withBody(buildFailedMatchResponse())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
