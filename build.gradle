@@ -27,7 +27,8 @@ dependencies {
     }
     compile('ch.qos.logback:logback-classic:1.2.3')
 
-    compileOnly 'org.projectlombok:lombok:1.16.12'
+    compileOnly 'org.projectlombok:lombok:1.16.20'
+    annotationProcessor 'org.projectlombok:lombok:1.16.20'
 
     testCompile 'io.github.bonigarcia:webdrivermanager:2.2.2'
     testCompile "com.github.tomakehurst:wiremock-standalone:2.18.0"

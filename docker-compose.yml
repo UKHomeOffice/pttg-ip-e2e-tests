@@ -1,0 +1,168 @@
+version: '3.1'
+services:
+
+  pttg-ip-e2e-tests:
+    build:
+      dockerfile: Dockerfile_e2e
+      context: .
+    ports:
+      - "8111:8111"
+      - "8112:8112"
+    depends_on:
+      - ui
+      - pttg-ip-api
+      - pttg-ip-hmrc
+      - pttg-ip-hmrc-access-code
+      - pttg-ip-audit
+      - db
+      - selenium
+    networks:
+      - eue-api-network
+    command: bash -c "gradle build"
+    volumes:
+      - ./out:/app/build/reports/tests
+
+  ui:
+    image: quay.io/ukhomeofficedigital/pttg-ip-fm-ui:build-294
+    hostname: "ui"
+    ports:
+      - "8000:8000"
+    networks:
+      - eue-api-network
+    environment:
+      - API_ROOT=http://pttg-ip-api:8080
+      - SERVER_PORT=8000
+
+  pttg-ip-api:
+    image: quay.io/ukhomeofficedigital/pttg-ip-api:build-744
+    hostname: "pttg-ip-api"
+    ports:
+      - "8082:8080"
+    networks:
+      - eue-api-network
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx768m
+      - SERVER_PORT=8080
+      - HMRC_SERVICE_URL=http://pttg-ip-hmrc:8080
+      - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
+      - AUDITING_DEPLOYMENT_NAME=auditdeploy
+      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
+
+  pttg-ip-hmrc:
+    image: quay.io/ukhomeofficedigital/pttg-ip-hmrc:build-1197
+    hostname: "pttg-ip-hmrc"
+    networks:
+      - eue-api-network
+    ports:
+      - "8024:8080"
+    depends_on:
+      - pttg-ip-hmrc-access-code
+      - db
+    environment:
+      - JAVA_OPTS=-Xms128m -Xmx256m
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=logtoconsole
+      - BASE_HMRC_URL=https://test-api.service.hmrc.gov.uk
+      - BASE_HMRC_ACCESS_CODE_URL=http://pttg-ip-hmrc-access-code:8080
+      - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
+      - AUDITING_DEPLOYMENT_NAME=auditdeploy
+      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
+
+  pttg-ip-hmrc-access-code:
+    image: quay.io/ukhomeofficedigital/pttg-ip-hmrc-access-code:build-191
+    hostname: "pttg-ip-hmrc-access-code"
+    networks:
+      - eue-api-network
+    ports:
+      - "8025:8080"
+    depends_on:
+      - pttg-ip-audit
+      - db
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx768m
+      - SERVER_PORT=8080
+      - BASE_HMRC_URL=https://test-api.service.hmrc.gov.uk
+      - SPRING_PROFILES_ACTIVE=logtoconsole,postgres
+      - HMRC_AC_DB_NAME=postgres
+      - HMRC_AC_DB_SCHEMA_NAME=pttg_access
+      - HMRC_AC_DB_USERNAME=postgres
+      - HMRC_AC_DB_PASSWORD=postgres
+      - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
+      - AUDITING_DEPLOYMENT_NAME=auditdeploy
+      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
+      - PTTG_DB_HOSTNAME=db
+      - PTTG_DB_PORT=5432
+
+  pttg-ip-audit:
+    hostname: "pttg-ip-audit"
+    image: quay.io/ukhomeofficedigital/pttg-ip-audit:build-435
+    ports:
+      - "8027:8080"
+    networks:
+      - eue-api-network
+    depends_on:
+      - db
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx768m
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=logtoconsole,postgres
+      - AUDITING_DEPLOYMENT_NAME=auditdeploy
+      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
+      - IP_DB_USERNAME=postgres
+      - IP_DB_PASSWORD=postgres
+      - IP_SCHEMA_NAME=pttg_rps
+      - PTTG_DB_NAME=pttgdev
+      - PTTG_DB_HOSTNAME=db
+      - PTTG_DB_PORT=5432
+      - MODE=bootstrap
+
+  db:
+    build: db
+    networks:
+      - eue-api-network
+    hostname: "db"
+    volumes:
+      - dbdata:/dbdata
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/mydata
+    ports:
+      - "5432:5432"
+
+  selenium:
+    image: selenium/hub:3.141.59-radium
+    container_name: selenium
+    networks:
+      - eue-api-network
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:3.141.59-radium
+    networks:
+      - eue-api-network
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium
+    environment:
+      - HUB_HOST=selenium
+      - HUB_PORT=4444
+
+  firefox:
+    image: selenium/node-firefox:3.141.59-radium
+    networks:
+      - eue-api-network
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium
+    environment:
+      - HUB_HOST=selenium
+      - HUB_PORT=4444
+
+networks:
+  eue-api-network:
+volumes:
+  dbdata: {}
