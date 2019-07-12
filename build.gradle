@@ -3,10 +3,14 @@ buildscript {
         mavenCentral()
         jcenter()
     }
+    dependencies {
+        classpath 'net.serenity-bdd:serenity-gradle-plugin:1.9.12'
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'project-report'
+apply plugin: 'net.serenity-bdd.aggregator'
 
 repositories {
     mavenCentral()
@@ -17,18 +21,11 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-annotations:2.9.5"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.5"
     compile "com.fasterxml.jackson.core:jackson-core:2.9.5"
-    compile('org.seleniumhq.selenium:selenium-java:3.4.0') {
-        exclude group: 'org.seleniumhq.selenium', module: 'selenium-android-driver'
-        exclude group: 'org.seleniumhq.selenium', module: 'selenium-iphone-driver'
-        exclude group: 'org.seleniumhq.selenium', module: 'selenium-safari-driver'
-        exclude group: 'org.webbitserver', module: 'webbit'
-        exclude group: 'commons-codec', module: 'commons-codec'
-        exclude group: 'cglib', module: 'cglib-nodep'
-    }
+    compile('org.seleniumhq.selenium:selenium-java:3.14.0')
     compile('ch.qos.logback:logback-classic:1.2.3')
 
-    compileOnly 'org.projectlombok:lombok:1.16.20'
-    annotationProcessor 'org.projectlombok:lombok:1.16.20'
+    compileOnly 'org.projectlombok:lombok:1.18.0'
+    annotationProcessor 'org.projectlombok:lombok:1.18.0'
 
     testCompile 'io.github.bonigarcia:webdrivermanager:2.2.2'
     testCompile "com.github.tomakehurst:wiremock-standalone:2.18.0"
@@ -36,4 +33,12 @@ dependencies {
     testCompile 'org.springframework:spring-test:4.3.18.RELEASE'
     testCompile 'org.springframework:spring-webmvc:4.3.18.RELEASE'
 
+    testCompile "info.cukes:gherkin:2.12.2"
+    testCompile "net.serenity-bdd:serenity-core:1.9.12"
+    testCompile "net.serenity-bdd:serenity-cucumber:1.9.5"
+    testCompile "net.serenity-bdd:serenity-junit:1.9.12"
+    testCompile "net.serenity-bdd:serenity-spring:1.9.12"
+
 }
+
+gradle.startParameter.continueOnFailure = false

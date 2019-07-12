@@ -2,12 +2,12 @@ package uk.gov.digital.ho.proving.income;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.apache.commons.io.IOUtils;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,8 +34,14 @@ public class IpsSearchTest {
     static final String MATCH_ID = "MATCH-ID";
     static final String ACCESS_ID = "ACCESS-ID";
 
+    @ClassRule
+    public static WireMockClassRule wireMockRule = new WireMockClassRule(options()
+            .port(8111)
+            .httpsPort(8112)
+            .bindAddress("localhost"));
+
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(options().port(8111).httpsPort(8112));
+    public WireMockClassRule instanceRule = wireMockRule;
 
     @BeforeClass
     public static void setUpClass() {
@@ -44,22 +50,21 @@ public class IpsSearchTest {
 
     @Before
     public void setUpTest() throws MalformedURLException {
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.acceptInsecureCerts();
-        driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), capabilities);
+        ChromeOptions options = new ChromeOptions();
+        options.setAcceptInsecureCerts(true);
+
+        driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
         ipsSearchPage = new IpsSearchPage(driver);
         ipsSearchPage.start();
     }
 
     @Test
-    @Ignore
     public void thatInvalidSearchesShowErrors() {
         ipsSearchPage.search();
         assertThat(ipsSearchPage.getErrorSummaryHeader()).isNotNull().withFailMessage("The error summary should be displayed");
     }
 
     @Test
-    @Ignore
     public void thatUnknownIndividualReturnsNoRecord() throws IOException {
         createFailedMatchStubs();
         Applicant applicant = new Applicant("Val", "Lee", LocalDate.of(1953, 12, 6), "YS255610C");

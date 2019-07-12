@@ -65,7 +65,7 @@ public class IpsSearchPage {
     }
 
     public void start() {
-        this.driver.get("http://ui:8000");
+        this.driver.get("http://ui:8000/#!/familymigration");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("submitBtn")));
     }
 

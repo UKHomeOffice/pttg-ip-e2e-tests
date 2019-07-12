@@ -137,9 +137,12 @@ services:
       - eue-api-network
     ports:
       - "4444:4444"
+    environment:
+      - GRID_BROWSER_TIMEOUT=10
+      - GRID_TIMEOUT=20
 
   chrome:
-    image: selenium/node-chrome:3.141.59-radium
+    image: selenium/node-chrome-debug:3.141.59-radium
     networks:
       - eue-api-network
     volumes:
@@ -149,6 +152,10 @@ services:
     environment:
       - HUB_HOST=selenium
       - HUB_PORT=4444
+      - NOVNC=true
+      - VNC_NO_PASSWORD=1
+    ports:
+      - 5900:5900
 
   firefox:
     image: selenium/node-firefox:3.141.59-radium
