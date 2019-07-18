@@ -37,8 +37,7 @@ public class IpsSearchTest {
     @ClassRule
     public static WireMockClassRule wireMockRule = new WireMockClassRule(options()
             .port(8111)
-            .httpsPort(8112)
-            .bindAddress("localhost"));
+            .httpsPort(8112));
 
     @Rule
     public WireMockClassRule instanceRule = wireMockRule;
@@ -52,10 +51,17 @@ public class IpsSearchTest {
     public void setUpTest() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
 
         driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
         ipsSearchPage = new IpsSearchPage(driver);
         ipsSearchPage.start();
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
     }
 
     @Test
@@ -123,22 +129,22 @@ public class IpsSearchTest {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(buildEmploymentsResponse())));
 
-        stubFor(get(urlEqualTo("/individuals/employments/paye?matchId=" + MATCH_ID + "&fromDate=2017-01-01"))
+        stubFor(get(urlMatching("/individuals/employments/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(buildEmploymentsPayeResponse())));
 
-        stubFor(get(urlEqualTo("/individuals/income/paye?matchId=" + MATCH_ID + "&fromDate=2017-01-01"))
+        stubFor(get(urlMatching("/individuals/income/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(buildPayeIncomeResponse())));
 
-        stubFor(get(urlEqualTo("/individuals/income/sa?matchId="+MATCH_ID+"&fromTaxYear=2016-17"))
+        stubFor(get(urlMatching("/individuals/income/sa\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*&toTaxYear=[0-9\\-]*"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(buildEmptySaResponse())));
 
-        stubFor(get(urlEqualTo("/individuals/income/sa/self-employments?matchId="+MATCH_ID+"&fromTaxYear=2016-17"))
+        stubFor(get(urlMatching("/individuals/income/sa/self-employments\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(buildSaSelfEmploymentResponse())));

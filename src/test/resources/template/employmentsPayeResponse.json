@@ -6,9 +6,9 @@
   },
   "employments": [
     {
-      "payFrequency": "FOUR_WEEKLY",
+      "payFrequency": "CALENDAY_MONTHLY",
       "startDate": "2016-01-01",
-      "endDate": "2016-06-30",
+      "endDate": "2019-06-30",
       "employer": {
         "payeReference": "123/AI45678",
         "name": "Acme Inc",
@@ -24,7 +24,7 @@
     },
     {
       "startDate": "2017-01-02",
-      "endDate": "2017-03-01",
+      "endDate": "2019-03-01",
       "employer": {
         "payeReference": "123/DI45678",
         "name": "Disney Inc",
