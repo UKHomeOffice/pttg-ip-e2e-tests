@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  db:
+    build: ""
+    volumes:
+      - dbdata:/var/lib/postgresql/data/mydata
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/mydata
+    ports:
+      - "5432:5432"
+volumes:
+  dbdata: {}
