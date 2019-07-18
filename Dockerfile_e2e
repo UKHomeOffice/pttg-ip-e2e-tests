@@ -35,4 +35,4 @@ EXPOSE 8111
 # Switch user to gradle user
 USER $USER
 
-RUN gradle assemble
+RUN gradle assemble -q

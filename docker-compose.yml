@@ -42,12 +42,9 @@ services:
     networks:
       - eue-api-network
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx768m
       - SERVER_PORT=8080
       - HMRC_SERVICE_URL=http://pttg-ip-hmrc:8080
       - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
-      - AUDITING_DEPLOYMENT_NAME=auditdeploy
-      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
 
   pttg-ip-hmrc:
     image: quay.io/ukhomeofficedigital/pttg-ip-hmrc:build-1197
@@ -60,14 +57,10 @@ services:
       - pttg-ip-hmrc-access-code
       - db
     environment:
-      - JAVA_OPTS=-Xms128m -Xmx256m
       - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=logtoconsole
       - BASE_HMRC_URL=http://pttg-ip-e2e-tests:8111
       - BASE_HMRC_ACCESS_CODE_URL=http://pttg-ip-hmrc-access-code:8080
       - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
-      - AUDITING_DEPLOYMENT_NAME=auditdeploy
-      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
 
   pttg-ip-hmrc-access-code:
     image: quay.io/ukhomeofficedigital/pttg-ip-hmrc-access-code:build-191
@@ -80,17 +73,9 @@ services:
       - pttg-ip-audit
       - db
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx768m
       - SERVER_PORT=8080
       - BASE_HMRC_URL=http://pttg-ip-e2e-tests:8111
-      - SPRING_PROFILES_ACTIVE=logtoconsole,postgres
-      - HMRC_AC_DB_NAME=postgres
-      - HMRC_AC_DB_SCHEMA_NAME=pttg_access
-      - HMRC_AC_DB_USERNAME=postgres
-      - HMRC_AC_DB_PASSWORD=postgres
       - PTTG_AUDIT_URL=http://pttg-ip-audit:8080
-      - AUDITING_DEPLOYMENT_NAME=auditdeploy
-      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
       - PTTG_DB_HOSTNAME=db
       - PTTG_DB_PORT=5432
 
@@ -104,18 +89,13 @@ services:
     depends_on:
       - db
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx768m
       - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=logtoconsole,postgres
-      - AUDITING_DEPLOYMENT_NAME=auditdeploy
-      - AUDITING_DEPLOYMENT_NAMESPACE=localdocker
       - IP_DB_USERNAME=postgres
       - IP_DB_PASSWORD=postgres
       - IP_SCHEMA_NAME=pttg_rps
       - PTTG_DB_NAME=pttgdev
       - PTTG_DB_HOSTNAME=db
       - PTTG_DB_PORT=5432
-      - MODE=bootstrap
 
   db:
     build: db
