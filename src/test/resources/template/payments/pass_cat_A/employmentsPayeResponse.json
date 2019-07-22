@@ -1,0 +1,26 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/employments/paye?matchId=${matchId}&fromDate=2015-05-05&toDate=2017-07-07"
+    }
+  },
+  "employments": [
+    {
+      "payFrequency": "CALENDAY_MONTHLY",
+      "startDate": "2016-01-01",
+      "endDate": "2019-06-30",
+      "employer": {
+        "payeReference": "123/AI45678",
+        "name": "Acme Inc",
+        "address": {
+          "line1": "Acme Inc Building",
+          "line2": "Acme Inc Campus",
+          "line3": "Acme Street",
+          "line4": "AcmeVille",
+          "line5": "Acme State",
+          "postcode": "AI22 9LL"
+        }
+      }
+    }
+  ]
+}

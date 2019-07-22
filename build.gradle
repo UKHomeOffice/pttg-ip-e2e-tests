@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'net.serenity-bdd:serenity-gradle-plugin:1.9.12'
+        classpath 'net.serenity-bdd:serenity-gradle-plugin:2.0.60'
     }
 }
 
@@ -34,11 +34,10 @@ dependencies {
     testCompile 'org.springframework:spring-webmvc:4.3.18.RELEASE'
 
     testCompile "info.cukes:gherkin:2.12.2"
-    testCompile "net.serenity-bdd:serenity-core:1.9.12"
-    testCompile "net.serenity-bdd:serenity-cucumber:1.9.5"
-    testCompile "net.serenity-bdd:serenity-junit:1.9.12"
-    testCompile "net.serenity-bdd:serenity-spring:1.9.12"
-
+    testCompile "net.serenity-bdd:serenity-core:2.0.60"
+    testCompile "net.serenity-bdd:serenity-cucumber:1.9.43"
+    testCompile "net.serenity-bdd:serenity-junit:2.0.60"
+    testCompile "net.serenity-bdd:serenity-spring:2.0.60"
 }
 
 gradle.startParameter.continueOnFailure = false

@@ -52,7 +52,7 @@ services:
     networks:
       - eue-api-network
     ports:
-      - "8024:8080"
+      - "8083:8080"
     depends_on:
       - pttg-ip-hmrc-access-code
       - db
@@ -68,7 +68,7 @@ services:
     networks:
       - eue-api-network
     ports:
-      - "8025:8080"
+      - "8084:8080"
     depends_on:
       - pttg-ip-audit
       - db
@@ -83,7 +83,7 @@ services:
     hostname: "pttg-ip-audit"
     image: quay.io/ukhomeofficedigital/pttg-ip-audit:build-435
     ports:
-      - "8080"
+      - "8085:8080"
     networks:
       - eue-api-network
     depends_on:
@@ -119,8 +119,8 @@ services:
     ports:
       - "4444:4444"
     environment:
-      - GRID_BROWSER_TIMEOUT=30
-      - GRID_TIMEOUT=60
+      - GRID_BROWSER_TIMEOUT=300
+      - GRID_TIMEOUT=600
 
   chrome:
     image: selenium/node-chrome-debug:3.141.59-radium
