@@ -35,7 +35,7 @@ dependencies {
 
     testCompile "info.cukes:gherkin:2.12.2"
     testCompile "net.serenity-bdd:serenity-core:2.0.60"
-    testCompile "net.serenity-bdd:serenity-cucumber:1.9.43"
+    testCompile "net.serenity-bdd:serenity-cucumber:1.9.40"
     testCompile "net.serenity-bdd:serenity-junit:2.0.60"
     testCompile "net.serenity-bdd:serenity-spring:2.0.60"
 }
