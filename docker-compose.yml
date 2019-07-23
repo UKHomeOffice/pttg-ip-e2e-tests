@@ -19,7 +19,7 @@ services:
       - selenium
     networks:
       - eue-api-network
-    command: bash -c "gradle build"
+    command: bash -c "gradle build | grep -v 'Download http'"
     volumes:
       - ./out:/app/build/reports/tests
 

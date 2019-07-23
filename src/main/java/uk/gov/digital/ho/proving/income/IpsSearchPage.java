@@ -76,7 +76,7 @@ public class IpsSearchPage {
     public IpsSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, 30);
+        this.wait = new WebDriverWait(driver, 40);
     }
 
     public void start() {
