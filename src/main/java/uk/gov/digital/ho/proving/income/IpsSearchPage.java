@@ -58,10 +58,25 @@ public class IpsSearchPage {
     @FindBy(id = "pageDynamicHeading")
     private WebElement pageHeading;
 
+    @FindBy(id = "outcomeBoxSummary")
+    private WebElement pageHeadingContent;
+
+    @FindBy(css = "div[ng-if=haveResult] > h2")
+    private WebElement resultHeading;
+
+    @FindBy(id = "yourSearchIndividualName0")
+    private WebElement applicantFullName;
+
+    @FindBy(id = "outcomeFromDate0")
+    private WebElement incomeFromDate;
+
+    @FindBy(id = "outcomeToDate0")
+    private WebElement incomeToDate;
+
     public IpsSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, 30);
+        this.wait = new WebDriverWait(driver, 40);
     }
 
     public void start() {
@@ -98,4 +113,30 @@ public class IpsSearchPage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("pageDynamicHeading")));
         return pageHeading;
     }
+
+    public WebElement getPageHeadingContent() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("outcomeBoxSummary")));
+        return pageHeadingContent;
+    }
+
+    public WebElement getResultHeading() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[ng-if=haveResult] > h2")));
+        return resultHeading;
+    }
+
+    public WebElement getApplicantFullName() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("yourSearchIndividualName0")));
+        return applicantFullName;
+    }
+
+    public WebElement getIncomeFromDate() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("outcomeFromDate0")));
+        return incomeFromDate;
+    }
+
+    public WebElement getIncomeToDate() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("outcomeToDate0")));
+        return incomeToDate;
+    }
+
 }

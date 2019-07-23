@@ -1,0 +1,11 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/income/paye?matchId=${matchId}&fromDate=2016-09-09&toDate=2018-09-09"
+    }
+  },
+  "paye": {
+    "income": [
+    ]
+  }
+}
