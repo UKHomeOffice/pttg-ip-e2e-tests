@@ -84,13 +84,36 @@ public class IpsSearchTest {
         hmrcStub.stubPassUser();
         submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
-        assertEquals("Passed", ipsSearchPage.getPageHeading().getText());
-        assertEquals(fullname + " meets the Income Proving requirement",
+        assertEquals(
+                "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
+                        "the expected value 'Passed'",
+                "Passed",
+                ipsSearchPage.getPageHeading().getText());
+        assertEquals(
+                "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
+                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
-        assertEquals("Results", ipsSearchPage.getResultHeading().getText());
-        assertEquals(fullname, ipsSearchPage.getApplicantFullName().getText());
-        assertEquals("03/07/2017", ipsSearchPage.getIncomeFromDate().getText());
-        assertEquals("03/07/2018", ipsSearchPage.getIncomeToDate().getText());
+        assertEquals(
+                "Result header '" + ipsSearchPage.getResultHeading().getText() + "' is different from " +
+                        "the expected value 'Results'",
+                "Results",
+                ipsSearchPage.getResultHeading().getText());
+        assertEquals(
+                "Full name '" + ipsSearchPage.getApplicantFullName().getText() + "' is different from " +
+                        "the expected value '" + fullname + "'",
+                fullname,
+                ipsSearchPage.getApplicantFullName().getText());
+        assertEquals(
+                "Income From date '" + ipsSearchPage.getIncomeFromDate().getText() + "' is different from " +
+                        "the expected value '03/07/2017'",
+                "03/07/2017",
+                ipsSearchPage.getIncomeFromDate().getText());
+        assertEquals(
+                "Income To date '" + ipsSearchPage.getIncomeToDate().getText() + "' is different from " +
+                        "the expected value '03/07/2018'",
+                "03/07/2018",
+                ipsSearchPage.getIncomeToDate().getText());
     }
 
     @Test
@@ -98,14 +121,37 @@ public class IpsSearchTest {
         hmrcStub.stubCatAPassUser();
         submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
-        assertEquals("Passed", ipsSearchPage.getPageHeading().getText());
-        assertEquals(fullname + " meets the Income Proving requirement",
+        assertEquals(
+                "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
+                        "the expected value 'Passed'",
+                "Passed",
+                ipsSearchPage.getPageHeading().getText());
+        assertEquals(
+                "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
+                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
-        assertEquals("Results", ipsSearchPage.getResultHeading().getText());
-        assertEquals(fullname, ipsSearchPage.getApplicantFullName().getText());
-        assertEquals("03/01/2018", ipsSearchPage.getIncomeFromDate().getText());
-        assertEquals("03/07/2018", ipsSearchPage.getIncomeToDate().getText());
-    }
+        assertEquals(
+                "Result header '" + ipsSearchPage.getResultHeading().getText() + "' is different from " +
+                        "the expected value 'Results'",
+                "Results",
+                ipsSearchPage.getResultHeading().getText());
+        assertEquals(
+                "Full name '" + ipsSearchPage.getApplicantFullName().getText() + "' is different from " +
+                        "the expected value '" + fullname + "'",
+                fullname,
+                ipsSearchPage.getApplicantFullName().getText());
+        assertEquals(
+                "Income From date '" + ipsSearchPage.getIncomeFromDate().getText() + "' is different from " +
+                        "the expected value '03/01/2018'",
+                "03/01/2018",
+                ipsSearchPage.getIncomeFromDate().getText());
+        assertEquals(
+                "Income To date '" + ipsSearchPage.getIncomeToDate().getText() + "' is different from " +
+                        "the expected value '03/07/2018'",
+                "03/07/2018",
+                ipsSearchPage.getIncomeToDate().getText());
+        }
 
     public void submitValidApplicant() {
         Applicant applicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A");

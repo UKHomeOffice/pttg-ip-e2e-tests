@@ -3,7 +3,7 @@ pipeline:
   test:
     image: quay.io/ukhomeofficedigital/openjdk8:v1.8.0.171
     commands:
-      - ./gradlew test | grep -v 'Download http'
+      - ./gradlew test
     when:
       branches: [ master ]
       event: push
