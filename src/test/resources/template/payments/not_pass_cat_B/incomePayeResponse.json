@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/income/paye?matchId=${matchId}&fromDate=2016-09-09&toDate=2018-09-09"
+    }
+  },
+  "paye": {
+    "income": [
+      {"employerPayeReference": "123/AX45853", "taxablePayment": 549.99, "nonTaxablePayment": 200.50, "paymentDate": "2018-04-01", "monthPayNumber": 1},
+      {"employerPayeReference": "123/DI45678", "taxablePayment": 1000.50, "nonTaxablePayment": 200.50, "paymentDate": "2018-04-01", "monthPayNumber": 1},
+      {"employerPayeReference": "123/AI45678", "taxablePayment": 1550.50, "nonTaxablePayment": 200.50, "paymentDate": "2018-05-30", "monthPayNumber": 2}
+    ]
+  }
+}

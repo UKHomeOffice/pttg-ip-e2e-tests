@@ -1,0 +1,13 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/income/paye?matchId=${matchId}&fromDate=2016-09-09&toDate=2018-09-09"
+    }
+  },
+  "paye": {
+    "income": [
+      {"employerPayeReference": "123/DI45678", "taxablePayment": 5550.50, "nonTaxablePayment": 200.50, "paymentDate": "2018-06-01", "monthPayNumber": 3},
+      {"employerPayeReference": "123/AI45678", "taxablePayment": 1550.50, "nonTaxablePayment": 200.50, "paymentDate": "2018-07-01", "monthPayNumber": 4}
+    ]
+  }
+}

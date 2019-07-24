@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import javax.annotation.Nullable;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -21,4 +23,7 @@ public class Applicant {
     private LocalDate dateOfBirth;
     @JsonProperty
     private String nino;
+    @JsonProperty
+    @Nullable
+    private List<String> employers;
 }

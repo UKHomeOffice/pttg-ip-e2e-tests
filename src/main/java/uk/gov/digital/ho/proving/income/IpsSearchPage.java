@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.digital.ho.proving.income.domain.Applicant;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class IpsSearchPage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IpsSearchPage.class);
@@ -72,6 +76,9 @@ public class IpsSearchPage {
 
     @FindBy(id = "outcomeToDate0")
     private WebElement incomeToDate;
+
+    @FindBy(css = "li[ng-repeat='e in i.employers']")
+    private List<WebElement> employmentList;
 
     public IpsSearchPage(WebDriver driver) {
         this.driver = driver;
@@ -137,6 +144,12 @@ public class IpsSearchPage {
     public WebElement getIncomeToDate() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("outcomeToDate0")));
         return incomeToDate;
+    }
+
+    public List<String> getEmploymentList() {
+        List<WebElement> employmentList = driver.findElements(By.cssSelector("li[ng-repeat='e in i.employers']"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("li[ng-repeat='e in i.employers']")));
+        return employmentList.stream().map(WebElement::getText).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }
