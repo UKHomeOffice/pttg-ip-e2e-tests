@@ -147,7 +147,6 @@ public class IpsSearchPage {
     }
 
     public List<String> getEmploymentList() {
-        List<WebElement> employmentList = driver.findElements(By.cssSelector("li[ng-repeat='e in i.employers']"));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("li[ng-repeat='e in i.employers']")));
         return employmentList.stream().map(WebElement::getText).collect(Collectors.toCollection(ArrayList::new));
     }
