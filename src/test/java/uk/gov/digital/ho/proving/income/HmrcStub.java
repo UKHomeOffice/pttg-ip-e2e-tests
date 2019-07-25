@@ -67,6 +67,58 @@ class HmrcStub {
 
     }
 
+    void stubCatBPassUser() throws IOException {
+
+        getMatchedUser();
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/employments/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildEmploymentsPayeResponse("/template/payments/pass_cat_B/employmentsPayeResponse.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildPayeIncomeResponse("/template/payments/pass_cat_B/incomePayeResponse.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/sa\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*&toTaxYear=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildEmptySaResponse("/template/payments/pass_cat_B/incomeSAResponseEmpty.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/sa/self-employments\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildSaSelfEmploymentResponse("/template/payments/pass_cat_B/incomeSASelfEmploymentsResponse.json"))));
+
+    }
+
+    void stubCatBNonPassUser() throws IOException {
+
+        getMatchedUser();
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/employments/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildEmploymentsPayeResponse("/template/payments/not_pass_cat_B/employmentsPayeResponse.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/paye\\?matchId=" + MATCH_ID + "&fromDate=[0-9\\-]*&toDate=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildPayeIncomeResponse("/template/payments/not_pass_cat_B/incomePayeResponse.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/sa\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*&toTaxYear=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildEmptySaResponse("/template/payments/not_pass_cat_B/incomeSAResponseEmpty.json"))));
+
+        wireMockRule.stubFor(get(urlMatching("/individuals/income/sa/self-employments\\?matchId=" + MATCH_ID + "&fromTaxYear=[0-9\\-]*"))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(hmrcResponse.buildSaSelfEmploymentResponse("/template/payments/not_pass_cat_B/incomeSASelfEmploymentsResponse.json"))));
+    }
+
+
     void createFailedMatchStubs() throws IOException {
 
         wireMockRule.stubFor(post(urlEqualTo("/oauth/token"))
