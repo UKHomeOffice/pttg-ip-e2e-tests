@@ -41,6 +41,27 @@ public class IpsSearchPage {
     @FindBy(id = "nino")
     private WebElement nino;
 
+    @FindBy(id = "secondIndividualBtn")
+    private WebElement secondIndividualLink;
+
+    @FindBy(id = "partnerForename")
+    private WebElement partnerForename;
+
+    @FindBy(id = "partnerSurname")
+    private WebElement partnerSurname;
+
+    @FindBy(id = "partnerDateOfBirthDay")
+    private WebElement partnerDateOfBirthDay;
+
+    @FindBy(id = "partnerDateOfBirthMonth")
+    private WebElement partnerDateOfBirthMonth;
+
+    @FindBy(id = "partnerDateOfBirthYear")
+    private WebElement partnerDateOfBirthYear;
+
+    @FindBy(id = "partnerNino")
+    private WebElement partnerNino;
+
     @FindBy(id = "dependants")
     private WebElement dependants;
 
@@ -70,6 +91,9 @@ public class IpsSearchPage {
 
     @FindBy(id = "yourSearchIndividualName0")
     private WebElement applicantFullName;
+
+    @FindBy(id = "yourSearchIndividualName1")
+    private WebElement partnerFullName;
 
     @FindBy(id = "outcomeFromDate0")
     private WebElement incomeFromDate;
@@ -111,6 +135,30 @@ public class IpsSearchPage {
         search();
     }
 
+    public void search(Applicant applicant, Applicant partner) {
+        forename.sendKeys(applicant.forename());
+        surname.sendKeys(applicant.surname());
+        dateOfBirthDay.sendKeys(Integer.valueOf(applicant.dateOfBirth().getDayOfMonth()).toString());
+        dateOfBirthMonth.sendKeys(Integer.valueOf(applicant.dateOfBirth().getMonthValue()).toString());
+        dateOfBirthYear.sendKeys(Integer.valueOf(applicant.dateOfBirth().getYear()).toString());
+        nino.sendKeys(applicant.nino());
+
+        secondIndividualLink.click();
+        partnerForename.sendKeys(partner.forename());
+        partnerSurname.sendKeys(partner.surname());
+        partnerDateOfBirthDay.sendKeys(Integer.valueOf(partner.dateOfBirth().getDayOfMonth()).toString());
+        partnerDateOfBirthMonth.sendKeys(Integer.valueOf(partner.dateOfBirth().getMonthValue()).toString());
+        partnerDateOfBirthYear.sendKeys(Integer.valueOf(partner.dateOfBirth().getYear()).toString());
+        partnerNino.sendKeys(partner.nino());
+
+        dependants.sendKeys("0");
+        applicationRaisedDateDay.sendKeys("3");
+        applicationRaisedDateMonth.sendKeys("7");
+        applicationRaisedDateYear.sendKeys("2018");
+
+        search();
+    }
+
     public WebElement getErrorSummaryHeader() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("validation-error-summary-heading")));
         return errorSummaryHeader;
@@ -134,6 +182,11 @@ public class IpsSearchPage {
     public WebElement getApplicantFullName() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("yourSearchIndividualName0")));
         return applicantFullName;
+    }
+
+    public WebElement getPartnerFullName() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("yourSearchIndividualName1")));
+        return partnerFullName;
     }
 
     public WebElement getIncomeFromDate() {

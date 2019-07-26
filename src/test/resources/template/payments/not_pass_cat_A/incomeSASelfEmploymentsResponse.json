@@ -1,0 +1,11 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/income/sa/self-employments?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
+    }
+  },
+  "selfAssessment": {
+    "taxReturns": [
+    ]
+  }
+}
