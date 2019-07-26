@@ -188,6 +188,7 @@ class HmrcStub {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
 
         wireMockRule.stubFor(post(urlEqualTo("/individuals/matching/"))
+                .withRequestBody(matchingJsonPath("$[?(@.nino == '" + applicantId + "')]"))
                 .willReturn(aResponse().withStatus(HttpStatus.OK.value())
                         .withBody(hmrcResponse.buildMatchResponse(applicantId))
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
