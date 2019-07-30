@@ -71,6 +71,8 @@ public class IpsSearchTest {
     @After
     public void tearDown() {
         driver.quit();
+        applicantEmployers.clear();
+        partnerEmployers.clear();
     }
 
     @Test
@@ -105,7 +107,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -149,7 +151,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -194,7 +196,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -240,7 +242,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " does not meet the Income Proving requirement",
+                        "the expected value '" + fullname + " does not meet the Income Proving requirement'",
                 fullname + " does not meet the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -281,7 +283,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " does not meet the Income Proving requirement",
+                        "the expected value '" + fullname + " does not meet the Income Proving requirement'",
                 fullname + " does not meet the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -304,6 +306,47 @@ public class IpsSearchTest {
                         " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
                 ipsSearchPage.getEmploymentList().containsAll(applicantEmployers) &&
                         ipsSearchPage.getEmploymentList().containsAll(partnerEmployers));
+    }
+
+    @Test
+    public void thatCatFPassingIndividualReturnsPotentialPass() throws IOException {
+        applicantEmployers.add("Acme Inc");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubCatFPassUser(mainApplicant);
+        submitValidApplicant();
+        assertThat(ipsSearchPage.getPageHeading()).isNotNull();
+        assertEquals(
+                "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
+                        "the expected value 'Potential Pass'",
+                "Potential Pass",
+                ipsSearchPage.getPageHeading().getText());
+        assertEquals(
+                "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
+                        "the expected value 'Check for evidence of current self employment'",
+                "Check for evidence of current self employment",
+                ipsSearchPage.getPageHeadingContent().getText());
+        assertEquals(
+                "Result header '" + ipsSearchPage.getResultHeading().getText() + "' is different from " +
+                        "the expected value 'Results'",
+                "Results",
+                ipsSearchPage.getResultHeading().getText());
+        assertEquals(
+                "Full name '" + ipsSearchPage.getApplicantFullName().getText() + "' is different from " +
+                        "the expected value '" + fullname + "'",
+                fullname,
+                ipsSearchPage.getApplicantFullName().getText());
+        assertEquals(
+                "Income From date '" + ipsSearchPage.getIncomeFromDate().getText() + "' is different from " +
+                        "the expected value '06/04/2017'",
+                "06/04/2017",
+                ipsSearchPage.getIncomeFromDate().getText());
+        assertEquals(
+                "Income To date '" + ipsSearchPage.getIncomeToDate().getText() + "' is different from " +
+                        "the expected value '05/04/2018'",
+                "05/04/2018",
+                ipsSearchPage.getIncomeToDate().getText());
     }
 
     private void submitValidApplicant() {

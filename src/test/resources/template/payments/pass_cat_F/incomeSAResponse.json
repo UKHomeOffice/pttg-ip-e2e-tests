@@ -1,0 +1,44 @@
+{
+  "_links": {
+    "self": {
+      "href": "/individuals/income/sa?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
+    },
+    "selfEmployments": {
+      "href": "/individuals/income/sa/self-employments?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
+    },
+    "employments": {
+      "href": "/individuals/income/sa/employments?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
+    },
+    "summary": {
+      "href": "/individuals/income/sa/summary?&matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
+    }
+  },
+  "selfAssessment": {
+    "registrations": [
+      {
+        "utr": "2432552635",
+        "registrationDate": "2012-01-06"
+      }
+    ],
+    "taxReturns": [
+      {
+        "taxYear": "2017-18",
+        "submissions": [
+          {
+            "utr": "2432552635",
+            "receivedDate": "2018-10-06"
+          }
+        ]
+      },
+      {
+        "taxYear": "2016-17",
+        "submissions": [
+          {
+            "utr": "2432552635",
+            "receivedDate": "2017-06-06"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@
   },
   "paye": {
     "income": [
+      {"employerPayeReference": "123/AI45678", "taxablePayment": 50.50, "nonTaxablePayment": 200.50, "paymentDate": "2018-07-01", "monthPayNumber": 4}
     ]
   }
 }

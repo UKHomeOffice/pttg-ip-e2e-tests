@@ -76,6 +76,18 @@ public class HmrcResponse {
                 .replace("${matchId}", applicantId);
     }
 
+    String buildSaMatchIdResponse(String responseFile, String applicantId) throws IOException {
+        return getResponseFile(responseFile)
+                .replace("${port}", Integer.valueOf(wireMockRule.port()).toString())
+                .replace("${matchId}", applicantId);
+    }
+
+    String buildSaSummaryResponse(String responseFile, String applicantId) throws IOException {
+        return getResponseFile(responseFile)
+                .replace("${port}", Integer.valueOf(wireMockRule.port()).toString())
+                .replace("${matchId}", applicantId);
+    }
+
     String buildSaSelfEmploymentResponse(String responseFile, String applicantId) throws IOException {
         return getResponseFile(responseFile)
                 .replace("${port}", Integer.valueOf(wireMockRule.port()).toString())
