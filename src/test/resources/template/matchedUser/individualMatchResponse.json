@@ -15,9 +15,9 @@
     }
   },
   "individual": {
-    "firstName": "Laurie",
-    "lastName": "Halford",
-    "nino": "GH576240A",
-    "dateOfBirth": "1992-03-01"
+    "firstName": "${firstName}",
+    "lastName": "${lastName}",
+    "nino": "${nino}",
+    "dateOfBirth": "${year}-${month}-${day}"
   }
 }

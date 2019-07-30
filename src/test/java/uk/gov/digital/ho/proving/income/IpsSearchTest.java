@@ -32,10 +32,16 @@ public class IpsSearchTest {
     private IpsSearchPage ipsSearchPage;
     private HmrcStub hmrcStub = new HmrcStub();
 
+    private Applicant mainApplicant;
+    private Applicant partnerApplicant;
     private String forename = "Laurie";
     private String surname = "Halford";
     private String fullname = forename + " " + surname;
-    private ArrayList<String> employers = new ArrayList<>();
+    private String partnerForename = "John";
+    private String partnerSurname = "Campbell";
+    private String partnerFullname = partnerForename + " " + partnerSurname;
+    private ArrayList<String> applicantEmployers = new ArrayList<>();
+    private ArrayList<String> partnerEmployers = new ArrayList<>();
 
     @ClassRule
     public static WireMockClassRule wireMockRule = new WireMockClassRule(options()
@@ -65,6 +71,8 @@ public class IpsSearchTest {
     @After
     public void tearDown() {
         driver.quit();
+        applicantEmployers.clear();
+        partnerEmployers.clear();
     }
 
     @Test
@@ -84,10 +92,13 @@ public class IpsSearchTest {
 
     @Test
     public void thatPassingIndividualReturnsSuccess() throws IOException {
-        hmrcStub.stubPassUser();
-        employers.add("Acme Inc");
-        employers.add("Disney Inc");
-        submitValidApplicant(employers);
+        applicantEmployers.add("Acme Inc");
+        applicantEmployers.add("Disney Inc");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubPassUser(mainApplicant);
+        submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
         assertEquals(
                 "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
@@ -96,7 +107,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -119,16 +130,19 @@ public class IpsSearchTest {
                         "the expected value '03/07/2018'",
                 "03/07/2018",
                 ipsSearchPage.getIncomeToDate().getText());
-        assertTrue("Employers list don't match. Expected " + Arrays.toString(employers.toArray()) +
+        assertTrue("Employers list don't match. Expected " + Arrays.toString(applicantEmployers.toArray()) +
                         " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
-                ipsSearchPage.getEmploymentList().containsAll(employers));
+                ipsSearchPage.getEmploymentList().containsAll(applicantEmployers));
     }
 
     @Test
     public void thatCatAPassingIndividualReturnsSuccess() throws IOException {
-        hmrcStub.stubCatAPassUser();
-        employers.add("Acme Inc");
-        submitValidApplicant(employers);
+        applicantEmployers.add("Acme Inc");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubCatAPassUser(mainApplicant);
+        submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
         assertEquals(
                 "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
@@ -137,7 +151,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -160,17 +174,20 @@ public class IpsSearchTest {
                         "the expected value '03/07/2018'",
                 "03/07/2018",
                 ipsSearchPage.getIncomeToDate().getText());
-        assertTrue("Employers list don't match. Expected " + Arrays.toString(employers.toArray()) +
+        assertTrue("Employers list don't match. Expected " + Arrays.toString(applicantEmployers.toArray()) +
                         " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
-                ipsSearchPage.getEmploymentList().containsAll(employers));
+                ipsSearchPage.getEmploymentList().containsAll(applicantEmployers));
     }
 
     @Test
     public void thatCatBPassingIndividualReturnsSuccess() throws IOException {
-        hmrcStub.stubCatBPassUser();
-        employers.add("Acme Inc");
-        employers.add("Disney Inc");
-        submitValidApplicant(employers);
+        applicantEmployers.add("Acme Inc");
+        applicantEmployers.add("Disney Inc");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubCatBPassUser(mainApplicant);
+        submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
         assertEquals(
                 "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
@@ -179,7 +196,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " meets the Income Proving requirement",
+                        "the expected value '" + fullname + " meets the Income Proving requirement'",
                 fullname + " meets the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -202,19 +219,21 @@ public class IpsSearchTest {
                         "the expected value '03/07/2018'",
                 "03/07/2018",
                 ipsSearchPage.getIncomeToDate().getText());
-
-        assertTrue("Employers list don't match. Expected " + Arrays.toString(employers.toArray()) +
+        assertTrue("Employers list don't match. Expected " + Arrays.toString(applicantEmployers.toArray()) +
                         " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
-                ipsSearchPage.getEmploymentList().containsAll(employers));
+                ipsSearchPage.getEmploymentList().containsAll(applicantEmployers));
     }
 
     @Test
-    public void thatCatBNonPassingIndividualReturnsFail() throws IOException {
-        hmrcStub.stubCatBNonPassUser();
-        employers.add("Acme Inc");
-        employers.add("Disney Inc");
-        employers.add("Macro Ltd");
-        submitValidApplicant(employers);
+    public void thatCatBNotPassingIndividualReturnsFail() throws IOException {
+        applicantEmployers.add("Acme Inc");
+        applicantEmployers.add("Disney Inc");
+        applicantEmployers.add("Macro Ltd");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubCatBNotPassUser(mainApplicant);
+        submitValidApplicant();
         assertThat(ipsSearchPage.getPageHeading()).isNotNull();
         assertEquals(
                 "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
@@ -223,7 +242,7 @@ public class IpsSearchTest {
                 ipsSearchPage.getPageHeading().getText());
         assertEquals(
                 "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
-                        "the expected value '" + fullname + " does not meet the Income Proving requirement",
+                        "the expected value '" + fullname + " does not meet the Income Proving requirement'",
                 fullname + " does not meet the Income Proving requirement",
                 ipsSearchPage.getPageHeadingContent().getText());
         assertEquals(
@@ -236,14 +255,106 @@ public class IpsSearchTest {
                         "the expected value '" + fullname + "'",
                 fullname,
                 ipsSearchPage.getApplicantFullName().getText());
-        assertTrue("Employers list don't match. Expected " + Arrays.toString(employers.toArray()) +
+        assertTrue("Employers list don't match. Expected " + Arrays.toString(applicantEmployers.toArray()) +
                         " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
-                ipsSearchPage.getEmploymentList().containsAll(employers));
+                ipsSearchPage.getEmploymentList().containsAll(applicantEmployers));
     }
 
-    private void submitValidApplicant(ArrayList<String> employers) {
-        Applicant applicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", employers);
-        ipsSearchPage.search(applicant);
+    @Test
+    public void thatCatANotPassingIndividualReturnsFail() throws IOException {
+
+        applicantEmployers.add("Acme Inc");
+        applicantEmployers.add("Disney Inc");
+        partnerEmployers.add("Macro Ltd");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1),
+                "GH576240A", applicantEmployers);
+        partnerApplicant = new Applicant(partnerForename, partnerSurname, LocalDate.of(1984, 4, 30),
+                "TW308454C", partnerEmployers);
+
+        hmrcStub.stubCatANotPassUser(mainApplicant, partnerApplicant);
+
+        submitValidApplicantWithPartner();
+        assertThat(ipsSearchPage.getPageHeading()).isNotNull();
+        assertEquals(
+                "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
+                        "the expected value 'Not passed'",
+                "Not passed",
+                ipsSearchPage.getPageHeading().getText());
+        assertEquals(
+                "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
+                        "the expected value '" + fullname + " does not meet the Income Proving requirement'",
+                fullname + " does not meet the Income Proving requirement",
+                ipsSearchPage.getPageHeadingContent().getText());
+        assertEquals(
+                "Result header '" + ipsSearchPage.getResultHeading().getText() + "' is different from " +
+                        "the expected value 'Results'",
+                "Results",
+                ipsSearchPage.getResultHeading().getText());
+        assertEquals(
+                "Full name '" + ipsSearchPage.getApplicantFullName().getText() + "' is different from " +
+                        "the expected value '" + fullname + "'",
+                fullname,
+                ipsSearchPage.getApplicantFullName().getText());
+        assertEquals(
+                "Partner Full name '" + ipsSearchPage.getPartnerFullName().getText() + "' is different from " +
+                        "the expected value '" + partnerFullname + "'",
+                partnerFullname,
+                ipsSearchPage.getPartnerFullName().getText());
+        assertTrue("Employers list don't match. Expected " + Arrays.toString(applicantEmployers.toArray()) +
+                        Arrays.toString(partnerEmployers.toArray()) +
+                        " but found " + Arrays.toString(ipsSearchPage.getEmploymentList().toArray()),
+                ipsSearchPage.getEmploymentList().containsAll(applicantEmployers) &&
+                        ipsSearchPage.getEmploymentList().containsAll(partnerEmployers));
+    }
+
+    @Test
+    public void thatCatFPassingIndividualReturnsPotentialPass() throws IOException {
+        applicantEmployers.add("Acme Inc");
+
+        mainApplicant = new Applicant(forename, surname, LocalDate.of(1992, 3, 1), "GH576240A", applicantEmployers);
+
+        hmrcStub.stubCatFPassUser(mainApplicant);
+        submitValidApplicant();
+        assertThat(ipsSearchPage.getPageHeading()).isNotNull();
+        assertEquals(
+                "Outcome '" + ipsSearchPage.getPageHeading().getText() + "' is different from " +
+                        "the expected value 'Potential Pass'",
+                "Potential Pass",
+                ipsSearchPage.getPageHeading().getText());
+        assertEquals(
+                "Outcome header '" + ipsSearchPage.getPageHeadingContent().getText() + "' is different from " +
+                        "the expected value 'Check for evidence of current self employment'",
+                "Check for evidence of current self employment",
+                ipsSearchPage.getPageHeadingContent().getText());
+        assertEquals(
+                "Result header '" + ipsSearchPage.getResultHeading().getText() + "' is different from " +
+                        "the expected value 'Results'",
+                "Results",
+                ipsSearchPage.getResultHeading().getText());
+        assertEquals(
+                "Full name '" + ipsSearchPage.getApplicantFullName().getText() + "' is different from " +
+                        "the expected value '" + fullname + "'",
+                fullname,
+                ipsSearchPage.getApplicantFullName().getText());
+        assertEquals(
+                "Income From date '" + ipsSearchPage.getIncomeFromDate().getText() + "' is different from " +
+                        "the expected value '06/04/2017'",
+                "06/04/2017",
+                ipsSearchPage.getIncomeFromDate().getText());
+        assertEquals(
+                "Income To date '" + ipsSearchPage.getIncomeToDate().getText() + "' is different from " +
+                        "the expected value '05/04/2018'",
+                "05/04/2018",
+                ipsSearchPage.getIncomeToDate().getText());
+    }
+
+    private void submitValidApplicant() {
+        ipsSearchPage.search(mainApplicant);
+    }
+
+    private void submitValidApplicantWithPartner() {
+        ipsSearchPage.search(mainApplicant, partnerApplicant);
     }
 
 }

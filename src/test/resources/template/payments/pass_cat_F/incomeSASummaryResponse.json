@@ -1,26 +1,24 @@
 {
   "_links": {
-    "self": {
-      "href": "/individuals/income/sa/self-employments?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"
-    }
+    "self": {"href": "/individuals/income/sa/summary?matchId=${matchId}&fromTaxYear=2016-17&toTaxYear=2017-18"}
   },
   "selfAssessment": {
     "taxReturns": [
       {
         "taxYear": "2017-18",
-        "selfEmployments": [
+        "summary": [
           {
             "utr": "2432552635",
-            "selfEmploymentProfit": 1
+            "totalIncome": 22000
           }
         ]
       },
       {
         "taxYear": "2016-17",
-        "selfEmployments": [
+        "summary": [
           {
             "utr": "2432552635",
-            "selfEmploymentProfit": 1
+            "totalIncome": 30000
           }
         ]
       }

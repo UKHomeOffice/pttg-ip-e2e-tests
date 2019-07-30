@@ -6,6 +6,24 @@
   },
   "selfAssessment": {
     "taxReturns": [
+      {
+        "taxYear": "2017-18",
+        "selfEmployments": [
+          {
+            "utr": "2432552635",
+            "selfEmploymentProfit": 1
+          }
+        ]
+      },
+      {
+        "taxYear": "2016-17",
+        "selfEmployments": [
+          {
+            "utr": "2432552635",
+            "selfEmploymentProfit": 1
+          }
+        ]
+      }
     ]
   }
 }
