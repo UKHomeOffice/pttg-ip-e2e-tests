@@ -14,7 +14,7 @@ services:
     image: selenium/standalone-chrome
 
   ui:
-    image: quay.io/ukhomeofficedigital/pttg-ip-fm-ui:{{.UI-IMAGE-VERSION}}
+    image: quay.io/ukhomeofficedigital/pttg-ip-fm-ui:latest
     environment:
       - API_ROOT=http://api:8081
       - FEEDBACK_ROOT=http://feedback:8080
