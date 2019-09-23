@@ -5,7 +5,7 @@ pipeline:
     commands:
       - ./gradlew test
     when:
-      branches: [ master, EE-21428-configurable-image-versions ]
+      branches: [ master ]
       event: push
 
 services:
