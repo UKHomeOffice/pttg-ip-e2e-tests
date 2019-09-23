@@ -1,7 +1,8 @@
 # pttg-ip-e2e-tests
 IPS end to end integration test suite 
 
-To run the test locally, make sure that you have docker and docker-compose installed, as well as VNC viewer.
+## Running tests locally with Docker
+Make sure that you have docker and docker-compose installed, as well as VNC viewer.
 
 From the project root directory, execute the following command:
 
@@ -28,8 +29,21 @@ http://localhost:8000/#!/familymigration
 
 If tests are run automatically from the docker container, the results will be located in the `out` directory.
 
+## Running tests locally with Drone
+
+If you have Drone CLI 0.8.* installed locally you can run this test suite locally with the command
+`drone exec`.
+
+## Running test in Intellij
 Tests can also be run manually via IntelliJ or command line once the docker-compose is up.
 To run the test manually and see their outcome it's possible to run the VNC Viewer
 and point it at localhost:5900. It shouldn't require a password to connect and if the chrome
 box is up, it will connect to it. Once the tests are kicked off and selenium is triggered, you
 should be able to see the browser appearing into the remote chrome box.
+
+## Testing different versions of components
+Drone does not support configurable image versions for services, therefore it is not possible to trigger 
+the tests specifying exact versions from another Drone job or from the command line.  
+* You can achieve this locally by editing the image versions of components in the docker-compose.yml.  
+* You can achieve this on the Drone server by editing the image versions of components in the .drone.yml file and adding your
+branch to the "test" stage. 
