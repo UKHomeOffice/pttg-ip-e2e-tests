@@ -29,11 +29,6 @@ http://localhost:8000/#!/familymigration
 
 If tests are run automatically from the docker container, the results will be located in the `out` directory.
 
-## Running tests locally with Drone
-
-If you have Drone CLI 0.8.* installed locally you can run this test suite locally with the command
-`drone exec`.
-
 ## Running test in Intellij
 Tests can also be run manually via IntelliJ or command line once the docker-compose is up.
 To run the test manually and see their outcome it's possible to run the VNC Viewer
