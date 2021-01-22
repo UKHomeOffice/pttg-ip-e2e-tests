@@ -1,42 +1,58 @@
-pipeline:
+---
+kind: pipeline
+type: kubernetes
+name: default
 
-  test:
-    image: quay.io/ukhomeofficedigital/openjdk8:v1.8.0.171
-    commands:
-      - ./gradlew test
-    when:
-      branches: [ master ]
-      event: push
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+
+- name: test
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/openjdk8:v1.8.0.171
+  commands:
+  - ./gradlew test
+  when:
+    event:
+    - push
 
 services:
 
-  selenium:
-    image: selenium/standalone-chrome
+- name: selenium
+  pull: if-not-exists
+  image: selenium/standalone-chrome
 
-  ui:
-    image: quay.io/ukhomeofficedigital/pttg-ip-fm-ui:latest
-    environment:
-      - API_ROOT=http://api:8081
-      - FEEDBACK_ROOT=http://feedback:8080
+- name: ui
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/pttg-ip-fm-ui:latest
+  environment:
+    API_ROOT: http://api:8081
+    FEEDBACK_ROOT: http://feedback:8080
 
-  api:
-    image: quay.io/ukhomeofficedigital/pttg-ip-api:latest
-    environment:
-      - HMRC_SERVICE_URL=http://hmrc:8100
-      - PTTG_AUDIT_URL=http://audit:8083
+- name: api
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/pttg-ip-api:latest
+  environment:
+    HMRC_SERVICE_URL: http://hmrc:8100
+    PTTG_AUDIT_URL: http://audit:8083
 
-  audit:
-    image: quay.io/ukhomeofficedigital/pttg-ip-audit:latest
+- name: audit
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/pttg-ip-audit:latest
 
-  hmrc:
-    image: quay.io/ukhomeofficedigital/pttg-ip-hmrc:latest
-    environment:
-      - BASE_HMRC_ACCESS_CODE_URL=http://hmrc-access:8090
-      - PTTG_AUDIT_URL=http://audit:8083
-      - BASE_HMRC_URL=http://test:8111
+- name: hmrc
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/pttg-ip-hmrc:latest
+  environment:
+    BASE_HMRC_ACCESS_CODE_URL: http://hmrc-access:8090
+    BASE_HMRC_URL: http://test:8111
+    PTTG_AUDIT_URL: http://audit:8083
 
-  hmrc-access:
-    image: quay.io/ukhomeofficedigital/pttg-ip-hmrc-access-code:latest
-    environment:
-      - PTTG_AUDIT_URL=http://audit:8083
-      - BASE_HMRC_URL=http://test:8111
+- name: hmrc-access
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/pttg-ip-hmrc-access-code:latest
+  environment:
+    BASE_HMRC_URL: http://test:8111
+    PTTG_AUDIT_URL: http://audit:8083
